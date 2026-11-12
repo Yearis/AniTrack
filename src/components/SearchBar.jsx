@@ -1,8 +1,6 @@
 import { Search } from "lucide-react";
-import { useState } from "react";
 
-export default function SearchBar({ ref, query, setQuery }) {
-    const [inputValue, setInputValue] = useState(query);
+export default function SearchBar({ ref, query, setDetailId, setQuery }) {
 
     return (
         <form
@@ -18,7 +16,10 @@ export default function SearchBar({ ref, query, setQuery }) {
                 ref={ref}
                 className="search-input"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => {
+                    setQuery(e.target.value);
+                    setDetailId(null);
+                }}
                 placeholder="Search anime..."
             />
             <button

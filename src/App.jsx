@@ -59,6 +59,7 @@ export default function App() {
                         <SearchBar
                             ref={inputRef}
                             query={query}
+                            setDetailId={setDetailId}
                             setQuery={setQuery}
                         />
 
