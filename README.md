@@ -30,8 +30,8 @@ A modern, responsive anime discovery and tracking web application powered by the
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Yearis/<your-repo-name>.git
-   cd <your-repo-name>
+   git clone https://github.com/Yearis/AniTrack.git
+   cd AniTrack
    ```
 
 2. **Install dependencies:**
