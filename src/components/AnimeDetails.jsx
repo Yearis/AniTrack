@@ -312,7 +312,10 @@ export default function AnimeDetails({
 
                     <div>
                         {relatedAnime.map((edge) => (
-                            <div key={edge.node.id}>
+                            <div
+                                key={edge.node.id}
+                                onClick={() => setDetailId(edge.node.id)}
+                            >
                                 <img
                                     className="related-img"
                                     src={edge.node.coverImage?.medium}
@@ -343,7 +346,10 @@ export default function AnimeDetails({
 
                     <div>
                         {recommendations.map((anime) => (
-                            <div key={anime.id}>
+                            <div
+                                key={anime.id}
+                                onClick={() => setDetailId(anime.id)}
+                            >
                                 <img
                                     className="rec-img"
                                     src={anime.coverImage?.medium}
