@@ -3,10 +3,15 @@ import { useAnimeDetails } from "../hooks/useAnimeDetails";
 import Loader from "./Loader";
 import ErrorMessage from "./ErrorMessage";
 import { useKey } from "../hooks/useKey";
+import { useWishlist } from "../hooks/useWishlist";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate, useParams } from "react-router";
+import Button from "./Button";
+import Review from "./Review";
+import ButtonAddToList from "./AddToListButton";
 
 function formatAnimeDate(date) {
     if (!date?.year) return "Unknown";
-
     if (!date.month) return date.year;
 
     const month = new Date(2000, date.month - 1).toLocaleString("en", {
@@ -14,7 +19,6 @@ function formatAnimeDate(date) {
     });
 
     if (!date.day) return `${month} ${date.year}`;
-
     return `${month} ${date.day}, ${date.year}`;
 }
 
@@ -33,34 +37,37 @@ const STATUS_LABELS = {
     HIATUS: "On Hiatus",
 };
 
-export default function AnimeDetails({
-    id,
-    setDetailId,
-    favouritesList,
-    handleAddElementsToFavourites,
-    handleDeleteElementsToFavourites,
-}) {
+export default function AnimeDetails() {
+    const { id } = useParams();
     const { result: item, isLoading, error } = useAnimeDetails(id);
+
+    const {
+        favouritesList,
+        handleAddElementsToFavourites,
+        handleDeleteElementsToFavourites,
+    } = useWishlist();
+
+    const { user } = useAuth();
+    const navigate = useNavigate();
 
     useKey(
         "escape",
         () => {
-            setDetailId(null);
+            navigate(-1);
         },
         document,
         id !== null,
     );
 
     if (isLoading) return <Loader content="Anime Details" />;
-
     if (error) return <ErrorMessage message={error} />;
-
     if (!item) {
         return <p>Couldn't load anime details. Please try again later.</p>;
     }
 
     const isFavourite =
-        favouritesList?.some((ele) => ele.id === item.id) ?? false;
+        favouritesList?.some((ele) => String(ele.id) === String(item.id)) ??
+        false;
 
     const title =
         item.title?.english ||
@@ -73,22 +80,26 @@ export default function AnimeDetails({
         "Unknown studio";
 
     const relatedAnime = item.relations?.edges ?? [];
-
     const recommendations =
         item.recommendations?.nodes
             ?.map((node) => node.mediaRecommendation)
             .filter(Boolean) ?? [];
 
     function handleFavouriteClick() {
+        if (!user) {
+            navigate("/login");
+            return;
+        }
+
         if (isFavourite) {
             handleDeleteElementsToFavourites(item.id);
         } else {
             const newItem = {
                 id: item.id,
-                image: item.coverImage.medium,
+                image: item.coverImage?.medium,
                 title: {
-                    english: item.title.english,
-                    romaji: item.title.romaji,
+                    english: item.title?.english,
+                    romaji: item.title?.romaji,
                 },
             };
 
@@ -103,49 +114,50 @@ export default function AnimeDetails({
                 className="anime-details-hero"
                 style={{
                     backgroundImage: item.coverImage?.extraLarge
-                        ? `linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.85)), url("${item.coverImage.extraLarge}")`
+                        ? `linear-gradient(rgba(14, 16, 21, 0.65), rgba(14, 16, 21, 0.88)), url("${item.coverImage.extraLarge}")`
                         : "none",
                 }}
             >
                 {/* Back and Favourite Buttons */}
                 <div className="anime-details-nav">
-                    <button type="button" className="anime-details-back-btn" onClick={() => setDetailId(null)}>
-                        <ArrowLeft size={22} />
-                    </button>
+                    <Button
+                        className="anime-details-back-btn"
+                        onClick={() => navigate(-1)}
+                    >
+                        <ArrowLeft size={20} />
+                    </Button>
 
-                    <button type="button" className="anime-details-fav-btn" onClick={handleFavouriteClick}>
+                    <Button
+                        className="anime-details-fav-btn"
+                        onClick={handleFavouriteClick}
+                    >
                         <Heart
-                            size={20}
-                            color={isFavourite ? "#ef4444" : "#c5c5c5"}
+                            size={18}
+                            color={isFavourite ? "#ef4444" : "#cbd5e1"}
                             fill={isFavourite ? "#ef4444" : "none"}
                         />
-                    </button>
+                    </Button>
                 </div>
 
                 {/* Poster and Anime Information */}
                 <div className="anime-details-main">
-                    {/* Large Cover Image */}
                     <img
                         className="anime-details-cover"
                         src={item.coverImage?.large}
                         alt={`${title} poster`}
                     />
 
-                    {/* Main Information */}
                     <div className="anime-details-info">
                         <h3>{title}</h3>
 
-                        {/* Native Title, Format and Status */}
                         <div className="anime-details-subtitles">
                             {item.title?.native && (
                                 <span>{item.title.native}</span>
                             )}
-
                             <span>
                                 {item.format?.replaceAll("_", " ") ||
                                     "Unknown format"}
                             </span>
-
                             <span>
                                 {STATUS_LABELS[item.status] ||
                                     item.status ||
@@ -153,38 +165,37 @@ export default function AnimeDetails({
                             </span>
                         </div>
 
-                        {/* Rating, Episodes and Format */}
                         <div className="anime-details-stats">
                             <span>★ {item.averageScore ?? "N/A"}/100</span>
-
                             <small>{item.episodes ?? "?"} Episodes</small>
-
                             <small>
                                 {item.format?.replaceAll("_", " ") ||
                                     "Unknown format"}
                             </small>
                         </div>
 
-                        {/* Dates and Studio */}
                         <div className="anime-details-dates">
                             <div>
                                 <p>Start: {formatAnimeDate(item.startDate)}</p>
-
                                 <p>End: {formatAnimeDate(item.endDate)}</p>
                             </div>
-
                             <div>
                                 <p>Studio</p>
                                 <span>{studios}</span>
                             </div>
                         </div>
 
-                        {/* Duration */}
                         {item.duration && (
                             <p className="anime-details-duration">
                                 Duration: {item.duration} minutes per episode
                             </p>
                         )}
+
+                        {/* Rating & Add to List Actions */}
+                        <div className="anime-details-actions">
+                            <Review key={id} maxStars={5} />
+                            <ButtonAddToList anime={item} type="full" />
+                        </div>
                     </div>
                 </div>
             </section>
@@ -192,7 +203,6 @@ export default function AnimeDetails({
             {/* Synopsis */}
             <section className="anime-details-section">
                 <h3>Synopsis</h3>
-
                 <p>
                     {cleanDescription(item.description) ||
                         "No description available."}
@@ -202,7 +212,6 @@ export default function AnimeDetails({
             {/* Genres */}
             <section className="anime-details-section">
                 <h3>Genres</h3>
-
                 <div className="anime-details-genres">
                     {item.genres?.map((genre) => (
                         <span key={genre}>{genre}</span>
@@ -213,35 +222,28 @@ export default function AnimeDetails({
             {/* Additional Information */}
             <section className="anime-details-section">
                 <h3>Additional Information</h3>
-
                 <div>
                     <p>
                         <strong>Season:</strong> {item.season || "Unknown"}
                     </p>
-
                     <p>
                         <strong>Season Year:</strong>{" "}
                         {item.seasonYear || "Unknown"}
                     </p>
-
                     <p>
                         <strong>Country of Origin:</strong>{" "}
                         {item.countryOfOrigin || "Unknown"}
                     </p>
-
                     <p>
                         <strong>Source:</strong>{" "}
                         {item.source?.replaceAll("_", " ") || "Unknown"}
                     </p>
-
                     <p>
                         <strong>Mean Score:</strong> {item.meanScore ?? "N/A"}
                     </p>
-
                     <p>
                         <strong>Popularity:</strong> {item.popularity ?? "N/A"}
                     </p>
-
                     <p>
                         <strong>Favourites:</strong> {item.favourites ?? "N/A"}
                     </p>
@@ -314,7 +316,9 @@ export default function AnimeDetails({
                         {relatedAnime.map((edge) => (
                             <div
                                 key={edge.node.id}
-                                onClick={() => setDetailId(edge.node.id)}
+                                onClick={() =>
+                                    navigate(`/app/anime/${edge.node.id}`)
+                                }
                             >
                                 <img
                                     className="related-img"
@@ -348,7 +352,9 @@ export default function AnimeDetails({
                         {recommendations.map((anime) => (
                             <div
                                 key={anime.id}
-                                onClick={() => setDetailId(anime.id)}
+                                onClick={() =>
+                                    navigate(`/app/anime/${anime.id}`)
+                                }
                             >
                                 <img
                                     className="rec-img"

@@ -3,18 +3,16 @@ import List from "./List";
 import SearchResultItem from "./SearchResultItem";
 import ErrorMessage from "./ErrorMessage";
 import { useAnimes } from "../hooks/useAnimes";
+import { useSearchParams } from "react-router";
 
-export default function SearchResults({
-    query,
-    genre,
-    status,
-    format,
-    favouritesList,
-    handleClickDetails,
-    handleAddElementsToFavourites,
-    handleDeleteElementsToFavourites,
-}) {
-    // hook
+export default function SearchResults() {
+    const [searchParams] = useSearchParams();
+
+    const query = searchParams.get("query") || "";
+    const genre = searchParams.get("genre") || "";
+    const format = searchParams.get("format") || "";
+    const status = searchParams.get("status") || "";
+
     const { results, isLoading, error } = useAnimes(
         query,
         genre,
@@ -29,18 +27,7 @@ export default function SearchResults({
                 <>
                     <p className="search-results-count">{`Found ${results.length} results`}</p>
 
-                    <List
-                        items={results}
-                        ItemComponent={SearchResultItem} // COMPONENT
-                        favouritesList={favouritesList}
-                        handleClickDetails={handleClickDetails}
-                        handleAddElementsToFavourites={
-                            handleAddElementsToFavourites
-                        }
-                        handleDeleteElementsToFavourites={
-                            handleDeleteElementsToFavourites
-                        }
-                    />
+                    <List items={results} ItemComponent={SearchResultItem} />
                 </>
             )}
             {error && <ErrorMessage message={error} />}

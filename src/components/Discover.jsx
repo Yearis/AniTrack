@@ -4,12 +4,7 @@ import ErrorMessage from "./ErrorMessage";
 import AnimeCard from "./AnimeCard";
 import List from "./List";
 
-export default function Discover({
-    favouritesList,
-    handleClickDetails,
-    handleAddElementsToFavourites,
-    handleDeleteElementsToFavourites,
-}) {
+export default function Discover() {
     const {
         results: trendingAnime,
         isLoading: trendingLoading,
@@ -36,18 +31,7 @@ export default function Discover({
 
                 {trendingLoading && <Loader content="Trending Animes" />}
                 {!trendingLoading && !trendingError && (
-                    <List
-                        items={trendingAnime}
-                        ItemComponent={AnimeCard} // COMPONENT
-                        favouritesList={favouritesList}
-                        handleClickDetails={handleClickDetails}
-                        handleAddElementsToFavourites={
-                            handleAddElementsToFavourites
-                        }
-                        handleDeleteElementsToFavourites={
-                            handleDeleteElementsToFavourites
-                        }
-                    />
+                    <List items={trendingAnime} ItemComponent={AnimeCard} />
                 )}
                 {trendingError && <ErrorMessage message={trendingError} />}
             </section>
@@ -58,46 +42,20 @@ export default function Discover({
 
                 {popularLoading && <Loader content="Popular Animes" />}
                 {!popularLoading && !popularError && (
-                    <List
-                        items={popularAnime}
-                        ItemComponent={AnimeCard}
-                        favouritesList={favouritesList}
-                        handleClickDetails={handleClickDetails}
-                        handleAddElementsToFavourites={
-                            handleAddElementsToFavourites
-                        }
-                        handleDeleteElementsToFavourites={
-                            handleDeleteElementsToFavourites
-                        }
-                    />
+                    <List items={popularAnime} ItemComponent={AnimeCard} />
                 )}
                 {popularError && <ErrorMessage message={popularError} />}
             </section>
 
             {/* section for highest rated anime's */}
             <section className="discover-section">
-                <h3>Highest Rated</h3>
+                <h3>Highest Rated Animes</h3>
 
-                {highestRatedLoading && (
-                    <Loader content="Highest Rated Animes" />
-                )}
+                {highestRatedLoading && <Loader content="Highest Rated Animes" />}
                 {!highestRatedLoading && !highestRatedError && (
-                    <List
-                        items={highestRatedAnime}
-                        ItemComponent={AnimeCard}
-                        favouritesList={favouritesList}
-                        handleClickDetails={handleClickDetails}
-                        handleAddElementsToFavourites={
-                            handleAddElementsToFavourites
-                        }
-                        handleDeleteElementsToFavourites={
-                            handleDeleteElementsToFavourites
-                        }
-                    />
+                    <List items={highestRatedAnime} ItemComponent={AnimeCard} />
                 )}
-                {highestRatedError && (
-                    <ErrorMessage message={highestRatedError} />
-                )}
+                {highestRatedError && <ErrorMessage message={highestRatedError} />}
             </section>
         </div>
     );

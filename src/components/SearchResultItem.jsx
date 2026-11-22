@@ -1,19 +1,28 @@
+import { useNavigate } from "react-router";
+import { useWishlist } from "../hooks/useWishlist";
+import { useAuth } from "../hooks/useAuth";
 import { Heart } from "lucide-react";
+import Button from "./Button";
+import Review from "./Review";
+import ButtonAddToList from "./AddToListButton";
 
-export default function SearchResultItem({
-    item,
-    favouritesList,
-    handleClickDetails,
-    handleAddElementsToFavourites,
-    handleDeleteElementsToFavourites,
-}) {
+export default function SearchResultItem({ item }) {
+    const navigate = useNavigate();
+    const { user } = useAuth();
+
+    const {
+        favouritesList,
+        handleAddElementsToFavourites,
+        handleDeleteElementsToFavourites,
+    } = useWishlist();
+
     const isFavourite =
-        favouritesList?.some((ele) => ele.id === item.id) ?? false;
+        favouritesList?.some((ele) => String(ele.id) === String(item.id)) ?? false;
 
     return (
         <li
             className="search-result-item"
-            onClick={() => handleClickDetails(item.id)}
+            onClick={() => navigate(`/app/anime/${item.id}`)}
         >
             <img
                 className="search-result-cover"
@@ -26,7 +35,6 @@ export default function SearchResultItem({
                     {item.title.english || item.title.romaji}
                 </h3>
 
-                {/* under the title all of them in a horizontal line */}
                 <span className="search-result-year">
                     {item.startDate?.year ?? "Unknown year"}
                 </span>
@@ -38,34 +46,47 @@ export default function SearchResultItem({
                 </span>
             </div>
 
-            <button
-                className="search-result-favourite-btn"
-                key="favourites"
-                onClick={(e) => {
-                    e.stopPropagation();
-
-                    if (isFavourite) {
-                        handleDeleteElementsToFavourites(item.id);
-                    } else {
-                        const newItem = {
-                            id: item.id,
-                            image: item.coverImage.medium,
-                            title: {
-                                english: item.title.english,
-                                romaji: item.title.romaji,
-                            },
-                        };
-
-                        handleAddElementsToFavourites(newItem);
-                    }
-                }}
+            <div
+                className="search-result-actions"
+                onClick={(e) => e.stopPropagation()}
             >
-                <Heart
-                    size={20}
-                    color={isFavourite ? "#ef4444" : "#c5c5c5"}
-                    fill={isFavourite ? "#ef4444" : "none"}
-                />
-            </button>
+                <Review maxStars={5} animeId={item.id} />
+
+                <ButtonAddToList anime={item} type="icon" />
+
+                <Button
+                    className="search-result-favourite-btn"
+                    onClick={(e) => {
+                        e.stopPropagation();
+
+                        if (!user) {
+                            navigate("/login");
+                            return;
+                        }
+
+                        if (isFavourite) {
+                            handleDeleteElementsToFavourites(item.id);
+                        } else {
+                            const newItem = {
+                                id: item.id,
+                                image: item.coverImage.medium,
+                                title: {
+                                    english: item.title.english,
+                                    romaji: item.title.romaji,
+                                },
+                            };
+
+                            handleAddElementsToFavourites(newItem);
+                        }
+                    }}
+                >
+                    <Heart
+                        size={20}
+                        color={isFavourite ? "#ef4444" : "currentColor"}
+                        fill={isFavourite ? "#ef4444" : "none"}
+                    />
+                </Button>
+            </div>
         </li>
     );
 }
