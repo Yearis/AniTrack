@@ -1,0 +1,13 @@
+.box {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 36px;
+    background-color: var(--bg-main);
+    transition: background-color 0.2s ease;
+}
+
+@media (max-width: 768px) {
+    .box {
+        padding: 16px 20px;
+    }
+}

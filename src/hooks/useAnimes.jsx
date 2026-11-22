@@ -1,9 +1,40 @@
-import { useState, useEffect } from "react";
+import { useEffect, useReducer } from "react";
+
+const initialState = {
+    results: [],
+    isLoading: false,
+    error: "",
+};
+
+function reducer(state, action) {
+    switch (action.type) {
+        case "animes/loading":
+            return { ...state, isLoading: true, error: "" };
+
+        case "animes/loaded":
+            return {
+                ...state,
+                results: action.payload,
+                isLoading: false,
+                error: "",
+            };
+
+        case "animes/rejected":
+            return { ...state, error: action.payload, isLoading: false };
+
+        default:
+            throw new Error("Unknown action");
+    }
+}
 
 export function useAnimes(keyword, genre, format, status) {
-    const [results, setResults] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
+    // const [results, setResults] = useState([]);
+    // const [isLoading, setIsLoading] = useState(false);
+    // const [error, setError] = useState("");
+
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    const { results, isLoading, error } = state;
 
     useEffect(() => {
         const ANILIST_API = "https://graphql.anilist.co";
@@ -106,15 +137,13 @@ export function useAnimes(keyword, genre, format, status) {
 
         async function fetchAnime() {
             try {
-                setResults([]);
-                setIsLoading(true);
-                setError("");
+                dispatch({ type: "animes/loading" });
 
-                console.log("Keyword:", keyword);
-                console.log("Genre:", genre);
-                console.log("Format:", format);
-                console.log("Status:", status);
-                console.log("Variables:", variables);
+                // console.log("Keyword:", keyword);
+                // console.log("Genre:", genre);
+                // console.log("Format:", format);
+                // console.log("Status:", status);
+                // console.log("Variables:", variables);
 
                 const response = await fetch(ANILIST_API, {
                     method: "POST",
@@ -137,18 +166,20 @@ export function useAnimes(keyword, genre, format, status) {
                     );
                 }
 
-                console.log("API results:", result.data.Page.media);
-                console.log("Results count:", result.data.Page.media.length);
+                // console.log("API results:", result.data.Page.media);
+                // console.log("Results count:", result.data.Page.media.length);
 
-                setResults(result.data.Page.media);
-                setError("");
+                dispatch({
+                    type: "animes/loaded",
+                    payload: result.data.Page.media,
+                });
             } catch (err) {
                 if (err.name !== "AbortError") {
-                    setError(err.message);
+                    dispatch({ type: "animes/rejected", payload: err.message });
                 }
             } finally {
                 if (!controller.signal.aborted) {
-                    setIsLoading(false);
+                    // setIsLoading(false);
                 }
             }
         }

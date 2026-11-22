@@ -1,0 +1,37 @@
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: all 0.15s ease;
+}
+
+.item:hover {
+    background-color: var(--bg-surface-hover);
+    border-color: var(--border-hover);
+}
+
+.selected {
+    border-color: var(--accent-amber);
+    background-color: var(--accent-amber-bg);
+}
+
+.name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.icon {
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+}
+
+.item:hover .icon {
+    transform: scale(1.15);
+}

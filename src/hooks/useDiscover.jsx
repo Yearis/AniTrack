@@ -1,9 +1,36 @@
-import { useState, useEffect } from "react";
+import { useEffect, useReducer } from "react";
+
+const initialState = {
+    results: [],
+    isLoading: false,
+    error: "",
+};
+
+function reducer(state, action) {
+    switch (action.type) {
+        case "discover/loading":
+            return { ...state, isLoading: true, error: "" };
+
+        case "discover/loaded":
+            return {
+                ...state,
+                results: action.payload,
+                isLoading: false,
+                error: "",
+            };
+
+        case "discover/rejected":
+            return { ...state, error: action.payload, isLoading: false };
+
+        default:
+            throw new Error("Unknown action");
+    }
+}
 
 export function useDiscover(sort) {
-    const [results, setResults] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    const { results, isLoading, error } = state;
 
     useEffect(() => {
         const ANILIST_API = "https://graphql.anilist.co";
@@ -40,8 +67,7 @@ export function useDiscover(sort) {
 
         async function fetchAnime() {
             try {
-                setIsLoading(true);
-                setError("");
+                dispatch({ type: "discover/loading" });
 
                 const response = await fetch(ANILIST_API, {
                     method: "POST",
@@ -64,15 +90,16 @@ export function useDiscover(sort) {
                     );
                 }
 
-                setResults(result.data.Page.media);
-                setError("");
+                dispatch({
+                    type: "discover/loaded",
+                    payload: result.data.Page.media,
+                });
             } catch (err) {
                 if (err.name !== "AbortError") {
-                    setError(err.message);
-                }
-            } finally {
-                if (!controller.signal.aborted) {
-                    setIsLoading(false);
+                    dispatch({
+                        type: "discover/rejected",
+                        payload: err.message,
+                    });
                 }
             }
         }

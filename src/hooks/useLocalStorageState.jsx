@@ -12,7 +12,21 @@ export function useLocalStorageState(keyword) {
     });
 
     function handleAddElement(newItem) {
-        setElements((itemsList) => [...itemsList, newItem]);
+        setElements((elements) => {
+            const exists = elements.some(
+                (item) => String(item.id) === String(newItem.id),
+            );
+
+            if (exists) {
+                return elements.map((item) =>
+                    String(item.id) === String(newItem.id)
+                        ? { ...item, ...newItem }
+                        : item,
+                );
+            } else {
+                return [...elements, newItem];
+            }
+        });
     }
 
     function handleDeleteElement(itemId) {
@@ -27,5 +41,9 @@ export function useLocalStorageState(keyword) {
         }
     }, [keyword, elements]);
 
-    return { elements, handleAddElement, handleDeleteElement };
+    return {
+        elements,
+        handleAddElement,
+        handleDeleteElement,
+    };
 }

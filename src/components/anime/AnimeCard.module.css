@@ -1,0 +1,168 @@
+.card {
+    flex: 0 0 215px;
+    min-width: 200px;
+    max-width: 225px;
+    scroll-snap-align: start;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-md);
+}
+
+.coverWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 2.85;
+    overflow: hidden;
+    background-color: var(--bg-surface-elevated);
+}
+
+.cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .cover {
+    transform: scale(1.05);
+}
+
+.favBtn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(18, 20, 28, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.15s, background-color 0.15s, border-color 0.15s;
+    z-index: 2;
+}
+
+:global(body.light-theme) .favBtn {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.favBtn:hover {
+    transform: scale(1.12);
+    background: rgba(28, 32, 45, 0.96);
+    border-color: rgba(255, 255, 255, 0.38);
+}
+
+:global(body.light-theme) .favBtn:hover {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
+.scoreBadge {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(15, 17, 24, 0.85);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: var(--accent-amber);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 6px;
+    letter-spacing: 0.2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+:global(body.light-theme) .scoreBadge {
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+    margin-top: 2px;
+}
+
+.statusBadge {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.airing {
+    color: var(--accent-emerald);
+    background-color: var(--accent-emerald-bg);
+    border-color: rgba(16, 185, 129, 0.25);
+}
+
+.genreBadge {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--accent-primary);
+    background-color: rgba(99, 102, 241, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.summary {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: 4px;
+}

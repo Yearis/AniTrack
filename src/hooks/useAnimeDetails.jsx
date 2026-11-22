@@ -1,9 +1,36 @@
-import { useState, useEffect } from "react";
+import { useEffect, useReducer } from "react";
+
+const initialState = {
+    result: null,
+    isLoading: false,
+    error: "",
+};
+
+function reducer(state, action) {
+    switch (action.type) {
+        case "anime/loading":
+            return { ...state, isLoading: true, error: "" };
+
+        case "anime/loaded":
+            return {
+                ...state,
+                result: action.payload,
+                isLoading: false,
+                error: "",
+            };
+
+        case "anime/rejected":
+            return { ...state, error: action.payload, isLoading: false };
+
+        default:
+            throw new Error("Unknown action");
+    }
+}
 
 export function useAnimeDetails(id) {
-    const [result, setResult] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    const { result, isLoading, error } = state;
 
     useEffect(() => {
         const ANILIST_API = "https://graphql.anilist.co";
@@ -154,12 +181,10 @@ export function useAnimeDetails(id) {
         }`;
 
         async function fetchAnime() {
-            try {
-                setResult(null);
-                setIsLoading(true);
-                setError("");
+            if (!id) return;
 
-                if (!id) return;
+            try {
+                dispatch({ type: "anime/loading" });
 
                 const response = await fetch(ANILIST_API, {
                     method: "POST",
@@ -182,15 +207,10 @@ export function useAnimeDetails(id) {
                     );
                 }
 
-                setResult(result.data.Media);
-                setError("");
+                dispatch({ type: "anime/loaded", payload: result.data.Media });
             } catch (err) {
                 if (err.name !== "AbortError") {
-                    setError(err.message);
-                }
-            } finally {
-                if (!controller.signal.aborted) {
-                    setIsLoading(false);
+                    dispatch({ type: "anime/rejected", payload: err.message });
                 }
             }
         }
