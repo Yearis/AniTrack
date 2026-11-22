@@ -3,12 +3,12 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { ListProvider } from "./contexts/ListContext";
 import { WishlistProvider } from "./contexts/WishlistContext";
 import { BrowserRouter, Route, Routes } from "react-router";
-import HomePage from "./components/HomePage";
-import LoginPage from "./components/LoginPage";
-import PageNotFound from "./components/PageNotFound";
-import AppLayout from "./components/AppLayout";
-import AppContent from "./components/AppContent";
-import AnimeDetails from "./components/AnimeDetails";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import PageNotFound from "./pages/PageNotFound";
+import AppLayout from "./pages/AppLayout";
+import AppContent from "./pages/AppContent";
+import AnimeDetails from "./pages/AnimeDetails";
 
 export default function App() {
     return (

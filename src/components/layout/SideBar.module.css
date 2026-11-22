@@ -1,0 +1,320 @@
+.sidebar {
+    width: 280px;
+    height: 100vh;
+    background-color: var(--bg-surface);
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    padding: 16px 12px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.collapsed {
+    width: 68px;
+    padding: 16px 8px;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 0 4px;
+}
+
+.title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+}
+
+.toggleBtn {
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-default);
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    color: var(--text-secondary);
+}
+
+.collapsed .toggleBtn {
+    margin-bottom: 20px;
+}
+
+.toggleBtn:hover {
+    background-color: var(--bg-surface-hover);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+}
+
+/* Collapsed Mode Icons */
+.collapsedIcons {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.collapsedIconBtn {
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-default);
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+}
+
+.collapsedIconBtn:hover {
+    background-color: var(--bg-surface-hover);
+    border-color: var(--border-hover);
+    transform: scale(1.06);
+}
+
+.collapsedFooter {
+    margin-top: auto;
+    padding-top: 12px;
+}
+
+/* Scroll Area for Playlists */
+.listsScroll {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-right: -4px;
+    padding-right: 4px;
+}
+
+.empty {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 24px 0;
+}
+
+.listGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.listHeaderBtn {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    width: 100%;
+    text-align: left;
+}
+
+.listHeaderBtn:hover {
+    background-color: var(--bg-surface-hover);
+    color: var(--text-primary);
+}
+
+.chevron {
+    color: var(--text-muted);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.expanded {
+    transform: rotate(90deg);
+}
+
+.listName {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-primary);
+}
+
+.listCount {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    padding: 2px 7px;
+    border-radius: 10px;
+}
+
+.itemsWrapper {
+    padding-left: 12px;
+    border-left: 2px solid var(--border-subtle);
+    margin-left: 16px;
+    margin-bottom: 8px;
+}
+
+/* Sidebar Footer & User Profile */
+.footer {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 12px;
+    margin-top: 8px;
+}
+
+.userProfileBtn {
+    background: transparent;
+    border: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    text-align: left;
+}
+
+.userProfileBtn:hover {
+    background-color: var(--bg-surface-hover);
+}
+
+.avatarCircle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #ffffff;
+    font-size: 14.5px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+}
+
+.avatarCircle.large {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+}
+
+.userText {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.userName {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userEmail {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* User Popover Dialog */
+.dialogBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--backdrop-bg);
+    z-index: 100;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+    animation: modalFadeIn 0.15s ease-out;
+}
+
+.dialogCard {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 12px;
+    padding: 16px;
+    width: 250px;
+    box-shadow: var(--shadow-lg);
+    animation: userDialogIn 0.15s ease-out;
+}
+
+.dialogHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dialogDetails {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.dialogName {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.dialogEmail {
+    font-size: 11.5px;
+    color: var(--text-muted);
+}
+
+.dialogDivider {
+    height: 1px;
+    background-color: var(--border-subtle);
+    margin: 12px 0;
+}
+
+.dialogLogoutBtn {
+    background: transparent;
+    border: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    color: var(--accent-rose);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.dialogLogoutBtn:hover {
+    background-color: var(--accent-rose-bg);
+}

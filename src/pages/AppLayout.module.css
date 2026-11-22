@@ -1,0 +1,65 @@
+.app {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--bg-app);
+}
+
+.navBar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: nowrap;
+}
+
+.title {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-right: 12px;
+    white-space: nowrap;
+    cursor: pointer;
+    letter-spacing: -0.4px;
+    transition: opacity 0.15s ease;
+}
+
+.title:hover {
+    opacity: 0.85;
+}
+
+.filtersGroup {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.themeToggleBtn {
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-default);
+    color: var(--text-secondary);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: auto;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
+}
+
+.themeToggleBtn:hover {
+    background-color: var(--bg-surface-hover);
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+    transform: scale(1.05);
+}
+
+@media (max-width: 992px) {
+    .filtersGroup {
+        display: none;
+    }
+}

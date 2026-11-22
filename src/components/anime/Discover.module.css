@@ -1,0 +1,46 @@
+.discover {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    animation: modalFadeIn 0.25s ease-out;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sectionTitle {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+}
+
+.flameIcon {
+    color: var(--accent-rose);
+}
+
+.sparkleIcon {
+    color: var(--accent-primary);
+}
+
+.trophyIcon {
+    color: var(--accent-amber);
+}
+
+.horizontalList {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 6px 4px 18px 4px;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}

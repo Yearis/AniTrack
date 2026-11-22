@@ -1,0 +1,36 @@
+.filterGroup {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.select {
+    background-color: var(--bg-surface-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 12.5px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.select:hover,
+.select:focus {
+    border-color: var(--border-hover);
+    background-color: var(--bg-surface-hover);
+}
+
+.option {
+    background-color: var(--bg-surface-elevated);
+    color: var(--text-primary);
+}

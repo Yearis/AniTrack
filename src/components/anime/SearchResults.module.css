@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: modalFadeIn 0.2s ease-out;
+}
+
+.header {
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.count {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+}
+
+.count strong {
+    color: var(--accent-primary);
+}

@@ -1,0 +1,328 @@
+.animeDetails {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding-bottom: 36px;
+    animation: modalFadeIn 0.25s ease-out;
+}
+
+.hero {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 24px 28px;
+    color: #ffffff;
+    border-radius: 14px;
+    position: relative;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.backBtn,
+.favBtn {
+    background-color: rgba(22, 25, 36, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
+}
+
+.backBtn:hover,
+.favBtn:hover {
+    background-color: rgba(35, 41, 58, 0.95);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.heroMain {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.cover {
+    width: 220px;
+    max-width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.info {
+    flex: 1;
+    min-width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.heroTitle {
+    font-size: 28px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    line-height: 1.25;
+}
+
+.subtitles {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.nativeTitle {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-right: 4px;
+}
+
+.metaBadge {
+    font-size: 11px;
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.stats {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13.5px;
+    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.score {
+    color: var(--accent-amber);
+    font-weight: 700;
+    font-size: 14.5px;
+}
+
+.dates {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: fit-content;
+}
+
+.dateLabel {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+/* Common Section */
+.section {
+    padding: 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sectionTitle {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+}
+
+.synopsisText {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    white-space: pre-line;
+}
+
+.genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.genreTag {
+    font-size: 12px;
+    font-weight: 500;
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-default);
+    color: var(--accent-primary);
+    padding: 4px 12px;
+    border-radius: 999px;
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    padding: 16px 20px;
+    border-radius: 12px;
+}
+
+.infoRow {
+    font-size: 13px;
+    display: flex;
+    gap: 6px;
+}
+
+.infoRow strong {
+    color: var(--text-primary);
+}
+
+.infoRow span {
+    color: var(--text-secondary);
+}
+
+/* Horizontal Scrolling Lists */
+.horizontalScroll {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+}
+
+.characterCard {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+    width: 130px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.characterCard:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-hover);
+}
+
+.characterImg {
+    width: 100%;
+    aspect-ratio: 2 / 2.7;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.characterName {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.characterRole {
+    font-size: 10.5px;
+    color: var(--text-muted);
+}
+
+.vaInfo {
+    margin-top: 2px;
+    padding-top: 4px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.vaName {
+    font-size: 10px;
+    color: var(--text-secondary);
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.relationCard {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+    width: 125px;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.relationCard:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.relationImg {
+    width: 100%;
+    aspect-ratio: 2 / 2.7;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.relationTitle {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.relationType {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    text-transform: capitalize;
+}
+
+.scoreText {
+    font-size: 11px;
+    color: var(--accent-amber);
+    font-weight: 600;
+}
