@@ -50,7 +50,7 @@ export default function CreateNewListDialog({ onClose, setIsCreatingNew }) {
                         Cancel
                     </Button>
                     <Button type="submit" className={styles.createBtn}>
-                        &plus; Add
+                        Add
                     </Button>
                 </div>
             </form>

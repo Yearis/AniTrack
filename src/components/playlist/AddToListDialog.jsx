@@ -32,7 +32,7 @@ export default function AddToListDialog({ setIsCreatingNew, anime, onClose }) {
                     className={styles.createBtn}
                     onClick={() => setIsCreatingNew(true)}
                 >
-                    &plus; Create New Playlist
+                    Create New Playlist
                 </Button>
             </div>
         </div>
