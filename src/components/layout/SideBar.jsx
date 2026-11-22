@@ -6,6 +6,7 @@ import {
     Heart,
     Bookmark,
     LogOut,
+    LogIn,
 } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import { useLists } from "../../hooks/useLists";
@@ -86,20 +87,31 @@ export default function SideBar() {
                     })}
                 </div>
 
-                {/* User Avatar Circle at Bottom */}
+                {/* User Avatar Circle or Sign In at Bottom */}
                 <div className={styles.collapsedFooter}>
-                    <button
-                        type="button"
-                        className={styles.avatarCircle}
-                        onClick={() => setIsUserDialogOpen(true)}
-                        title={`${userName} (${userEmail})`}
-                    >
-                        {userInitial}
-                    </button>
+                    {user ? (
+                        <button
+                            type="button"
+                            className={styles.avatarCircle}
+                            onClick={() => setIsUserDialogOpen(true)}
+                            title={`${userName} (${userEmail})`}
+                        >
+                            {userInitial}
+                        </button>
+                    ) : (
+                        <button
+                            type="button"
+                            className={styles.collapsedSignInBtn}
+                            onClick={() => navigate("/login")}
+                            title="Sign In / Sign Up"
+                        >
+                            <LogIn size={18} />
+                        </button>
+                    )}
                 </div>
 
                 {/* User Dialog */}
-                {isUserDialogOpen && (
+                {user && isUserDialogOpen && (
                     <div
                         className={styles.dialogBackdrop}
                         onClick={() => setIsUserDialogOpen(false)}
@@ -216,23 +228,34 @@ export default function SideBar() {
                 )}
             </div>
 
-            {/* User Footer Profile */}
+            {/* User Footer Profile or Sign In */}
             <div className={styles.footer}>
-                <button
-                    type="button"
-                    className={styles.userProfileBtn}
-                    onClick={() => setIsUserDialogOpen(true)}
-                >
-                    <div className={styles.avatarCircle}>{userInitial}</div>
-                    <div className={styles.userText}>
-                        <span className={styles.userName}>{userName}</span>
-                        <span className={styles.userEmail}>{userEmail}</span>
-                    </div>
-                </button>
+                {user ? (
+                    <button
+                        type="button"
+                        className={styles.userProfileBtn}
+                        onClick={() => setIsUserDialogOpen(true)}
+                    >
+                        <div className={styles.avatarCircle}>{userInitial}</div>
+                        <div className={styles.userText}>
+                            <span className={styles.userName}>{userName}</span>
+                            <span className={styles.userEmail}>{userEmail}</span>
+                        </div>
+                    </button>
+                ) : (
+                    <button
+                        type="button"
+                        className={styles.signInBtn}
+                        onClick={() => navigate("/login")}
+                    >
+                        <LogIn size={16} />
+                        <span>Sign In / Sign Up</span>
+                    </button>
+                )}
             </div>
 
             {/* User Dialog */}
-            {isUserDialogOpen && (
+            {user && isUserDialogOpen && (
                 <div
                     className={styles.dialogBackdrop}
                     onClick={() => setIsUserDialogOpen(false)}
